@@ -160,7 +160,7 @@ pub fn App() -> impl IntoView {
         }
     });
 
-    let (dark_mode, _) = create_signal(move || {
+    let dark_mode = Signal::derive(move || {
         if provide_settings.version().with(|v| *v > 0) {
             let settings = expect_context::<RwSignal<AppSettings>>();
             match settings.with(|s| s.theme) {
@@ -185,7 +185,7 @@ pub fn App() -> impl IntoView {
 
     view! {
       <Router>
-        <main class:dark=move || dark_mode()()>
+        <main class:dark=dark_mode>
           <div class="h-screen dark:bg-gray-900 pt-5 grid grid-rows-[5%_90%]">
             <nav class="w-full grid grid-cols-3 px-5 gap-5">
 
